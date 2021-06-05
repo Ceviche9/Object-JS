@@ -1,3 +1,25 @@
+const input = document.querySelector('.input');
+const btn = document.querySelector('.btn');
+const resp =document.querySelector('.resp');
+
+//Enviando um CPF para saber se é válido->
+btn.addEventListener('click', function(e){
+
+   const checar = new ValidaCPF(input.value);
+   
+   if(checar.valida()) {
+
+        resp.innerText = 'CPF VÁLIDO';    
+
+   }else{
+
+     resp.innerText = 'CPF INVÁLIDO';
+
+   }
+
+})
+
+
 function ValidaCPF(cpfEnviado){
     
     Object.defineProperty(this, 'cpfLimpo', {
@@ -30,11 +52,15 @@ ValidaCPF.prototype.valida = function() {
     return novoCpf === this.cpfLimpo;
 }
 
+//Calculo para encontrar os dígitos finais
 ValidaCPF.prototype.criaDigito = function(cpfParcial) {
 
+    //criando um array com os 9 dígitos->
     const cpfArray = Array.from(cpfParcial);
+    //criando o contador para usar no reduce()
     let contador = cpfArray.length + 1;
 
+    //Fazendo a soma ->
     const total= cpfArray.reduce((ac, valor) => {
 
         ac += (contador * Number(valor))
@@ -43,19 +69,10 @@ ValidaCPF.prototype.criaDigito = function(cpfParcial) {
 
     }, 0);
     
+    //Para encontrar o dígito->
     const digito = 11 - (total % 11);
     
+    // "Se o dígito for maior que 9 retorna 0, se não retorna o dígito"
     return digito > 9 ? '0' : String(digito);
 
-}
-
-
-const cpf = new ValidaCPF('083.563.613-54');
-
-if(cpf.valida()) {
-
-    console.log('CPF válido')
-}else{
-
-    console.log('CPF inválido')
 }
