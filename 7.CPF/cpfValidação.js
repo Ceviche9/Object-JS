@@ -19,6 +19,20 @@ btn.addEventListener('click', function(e){
 
 })
 
+input.addEventListener('keypress', function(e) {
+
+    valor = input.value.length
+
+    if (valor == 3 || valor == 7){
+
+        input.value += '.'
+    }
+
+    if (valor == 11) {
+
+        input.value += '-'
+    }
+})
 
 function ValidaCPF(cpfEnviado){
     
